@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php" defaultTestSuite="all">
   <testsuites>
-    <testsuite name="tests">
-      <directory>tests</directory>
+    <testsuite name="all">
+      <directory>problems/*/tests</directory>
+    </testsuite>
+    <testsuite name="problem01">
+      <directory>problems/problem01/tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-enum OrderStatus
+final readonly class OrderItem
 {
-    case Pending;
 }

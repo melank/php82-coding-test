@@ -17,7 +17,11 @@ docker compose run --rm php composer install
 ## テスト実行
 
 ```bash
+# 全問題のテストを実行
 docker compose run --rm php vendor/bin/phpunit
+
+# 特定の問題のみ実行
+docker compose run --rm php vendor/bin/phpunit --testsuite problem01
 ```
 
 ## ディレクトリ構成
@@ -30,43 +34,57 @@ docker compose run --rm php vendor/bin/phpunit
 ├── docker-compose.yml
 ├── composer.json
 ├── phpunit.xml
-├── src/                    # 実装コード
-│   ├── OrderStatus.php
-│   ├── OrderItem.php
-│   ├── InMemoryProductCatalog.php
-│   ├── Order.php
-│   └── OrderService.php
-└── tests/                  # テストコード
-    └── OrderServiceTest.php
+└── problems/
+    └── problem01/          # 問題01: 注文サービス
+        ├── src/
+        │   ├── OrderStatus.php
+        │   ├── OrderItem.php
+        │   ├── InMemoryProductCatalog.php
+        │   ├── Order.php
+        │   └── OrderService.php
+        └── tests/
+            └── OrderServiceTest.php
 ```
 
-## 課題内容
+## 新しい問題の追加方法
 
-注文サービス (`OrderService`) を実装し、以下のテストをすべてパスさせる。
+1. `problems/problemXX/` ディレクトリを作成
+2. `src/` と `tests/` を配置
+3. `composer dump-autoload` を実行
+4. `phpunit.xml` に testsuite を追加（個別実行用）
 
-### 要件
+```bash
+# 例: problem02 を追加
+mkdir -p problems/problem02/{src,tests}
+docker compose run --rm php composer dump-autoload
+```
 
-- `OrderService::place(int $userId, array $items): Order`
-  - 注文を作成し、`Order` オブジェクトを返す
-  - `Order` は `Pending` ステータスで作成される
+`phpunit.xml` に以下を追加:
 
-- `Order::totalQuantity(): int`
-  - 注文内の商品数量の合計を返す
+```xml
+<testsuite name="problem02">
+  <directory>problems/problem02/tests</directory>
+</testsuite>
+```
 
-- `Order::totalPrice(): int`
-  - 注文の合計金額を返す（単価 × 数量の総和）
+実行:
 
-### 例外条件
+```bash
+docker compose run --rm php vendor/bin/phpunit --testsuite problem02
+```
 
-| 条件 | 例外メッセージ |
-|------|---------------|
-| items が空 | `Items cannot be empty` |
-| quantity が 0 以下 | `Quantity must be greater than 0` |
-| 商品が存在しない | `Product not found: {productId}` |
+---
 
 ## 練習方法
 
-1. `src/` 配下のファイルを削除または空にする
-2. `docker compose run --rm php vendor/bin/phpunit` でテストが失敗することを確認
+1. 解きたい問題の `src/` 配下のファイルを削除または空にする
+2. テストが失敗することを確認
 3. テストが通るように最小限の実装を行う（TDD）
 4. すべてのテストがグリーンになれば完了
+
+```bash
+# 例: problem01 を練習
+rm problems/problem01/src/*.php
+docker compose run --rm php vendor/bin/phpunit --testsuite problem01
+# テストが失敗する → 実装する → 再度テスト
+```

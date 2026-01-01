@@ -35,12 +35,12 @@ class ComposerStaticInitc276d697aa0bbec4b922e8ccaf85e87e
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'InMemoryProductCatalog' => __DIR__ . '/../..' . '/src/InMemoryProductCatalog.php',
-        'Order' => __DIR__ . '/../..' . '/src/Order.php',
-        'OrderItem' => __DIR__ . '/../..' . '/src/OrderItem.php',
-        'OrderService' => __DIR__ . '/../..' . '/src/OrderService.php',
-        'OrderServiceTest' => __DIR__ . '/../..' . '/tests/OrderServiceTest.php',
-        'OrderStatus' => __DIR__ . '/../..' . '/src/OrderStatus.php',
+        'InMemoryProductCatalog' => __DIR__ . '/../..' . '/problems/problem01/src/InMemoryProductCatalog.php',
+        'Order' => __DIR__ . '/../..' . '/problems/problem01/src/Order.php',
+        'OrderItem' => __DIR__ . '/../..' . '/problems/problem01/src/OrderItem.php',
+        'OrderService' => __DIR__ . '/../..' . '/problems/problem01/src/OrderService.php',
+        'OrderServiceTest' => __DIR__ . '/../..' . '/problems/problem01/tests/OrderServiceTest.php',
+        'OrderStatus' => __DIR__ . '/../..' . '/problems/problem01/src/OrderStatus.php',
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
         'PHPUnit\\Event\\Application\\Started' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Started.php',

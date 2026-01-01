@@ -7,12 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'InMemoryProductCatalog' => $baseDir . '/src/InMemoryProductCatalog.php',
-    'Order' => $baseDir . '/src/Order.php',
-    'OrderItem' => $baseDir . '/src/OrderItem.php',
-    'OrderService' => $baseDir . '/src/OrderService.php',
-    'OrderServiceTest' => $baseDir . '/tests/OrderServiceTest.php',
-    'OrderStatus' => $baseDir . '/src/OrderStatus.php',
+    'InMemoryProductCatalog' => $baseDir . '/problems/problem01/src/InMemoryProductCatalog.php',
+    'Order' => $baseDir . '/problems/problem01/src/Order.php',
+    'OrderItem' => $baseDir . '/problems/problem01/src/OrderItem.php',
+    'OrderService' => $baseDir . '/problems/problem01/src/OrderService.php',
+    'OrderServiceTest' => $baseDir . '/problems/problem01/tests/OrderServiceTest.php',
+    'OrderStatus' => $baseDir . '/problems/problem01/src/OrderStatus.php',
     'PHPUnit\\Event\\Application\\Finished' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
     'PHPUnit\\Event\\Application\\FinishedSubscriber' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
     'PHPUnit\\Event\\Application\\Started' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/Started.php',
