@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class OrderServiceTest extends TestCase
@@ -19,7 +20,8 @@ final class OrderServiceTest extends TestCase
         $this->service = new OrderService($this->catalog);
     }
 
-    public function testPlaceOrderSuccessfully(): void
+    #[Test]
+    public function 注文を作成できる(): void
     {
         $order = $this->service->place(userId: 42, items: [
             ['productId' => 1, 'quantity' => 2],
@@ -30,7 +32,8 @@ final class OrderServiceTest extends TestCase
         $this->assertSame(OrderStatus::Pending, $order->status);
     }
 
-    public function testTotalQuantity(): void
+    #[Test]
+    public function 合計数量を取得できる(): void
     {
         $order = $this->service->place(userId: 1, items: [
             ['productId' => 1, 'quantity' => 2],
@@ -40,7 +43,8 @@ final class OrderServiceTest extends TestCase
         $this->assertSame(5, $order->totalQuantity());
     }
 
-    public function testTotalPrice(): void
+    #[Test]
+    public function 合計金額を取得できる(): void
     {
         $order = $this->service->place(userId: 1, items: [
             ['productId' => 1, 'quantity' => 2],  // 100 * 2 = 200
@@ -50,7 +54,8 @@ final class OrderServiceTest extends TestCase
         $this->assertSame(400, $order->totalPrice());
     }
 
-    public function testEmptyItemsThrowsException(): void
+    #[Test]
+    public function 商品が空の場合は例外が発生する(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Items cannot be empty');
@@ -58,7 +63,8 @@ final class OrderServiceTest extends TestCase
         $this->service->place(userId: 1, items: []);
     }
 
-    public function testZeroQuantityThrowsException(): void
+    #[Test]
+    public function 数量が0の場合は例外が発生する(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Quantity must be greater than 0');
@@ -68,7 +74,8 @@ final class OrderServiceTest extends TestCase
         ]);
     }
 
-    public function testNegativeQuantityThrowsException(): void
+    #[Test]
+    public function 数量が負の場合は例外が発生する(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Quantity must be greater than 0');
@@ -78,7 +85,8 @@ final class OrderServiceTest extends TestCase
         ]);
     }
 
-    public function testProductNotFoundThrowsException(): void
+    #[Test]
+    public function 存在しない商品の場合は例外が発生する(): void
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Product not found: 999');

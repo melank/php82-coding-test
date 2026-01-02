@@ -1,5 +1,20 @@
 # Project Rules
 
+## テストの書き方
+
+- テストメソッド名は日本語で記述する
+- `#[Test]` Attribute を使用する（`test` prefix は使わない）
+
+```php
+use PHPUnit\Framework\Attributes\Test;
+
+#[Test]
+public function 注文を作成できる(): void
+{
+    // ...
+}
+```
+
 ## 問題追加時のルール
 
 `problems/problemXX/` を追加した場合、必ず `phpunit.xml` に testsuite を追加すること。
