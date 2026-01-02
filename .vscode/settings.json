@@ -1,0 +1,9 @@
+{
+    "[php]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "cursor.cpp.disabledLanguages": [
+        "*"
+    ]
+}
