@@ -35,12 +35,6 @@ class ComposerStaticInitc276d697aa0bbec4b922e8ccaf85e87e
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'InMemoryProductCatalog' => __DIR__ . '/../..' . '/problems/problem01/src/InMemoryProductCatalog.php',
-        'Order' => __DIR__ . '/../..' . '/problems/problem01/src/Order.php',
-        'OrderItem' => __DIR__ . '/../..' . '/problems/problem01/src/OrderItem.php',
-        'OrderService' => __DIR__ . '/../..' . '/problems/problem01/src/OrderService.php',
-        'OrderServiceTest' => __DIR__ . '/../..' . '/problems/problem01/tests/OrderServiceTest.php',
-        'OrderStatus' => __DIR__ . '/../..' . '/problems/problem01/src/OrderStatus.php',
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
         'PHPUnit\\Event\\Application\\Started' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Started.php',
@@ -1216,6 +1210,12 @@ class ComposerStaticInitc276d697aa0bbec4b922e8ccaf85e87e
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
+        'problems\\problem01\\src\\InMemoryProductCatalog' => __DIR__ . '/../..' . '/problems/problem01/src/InMemoryProductCatalog.php',
+        'problems\\problem01\\src\\Order' => __DIR__ . '/../..' . '/problems/problem01/src/Order.php',
+        'problems\\problem01\\src\\OrderItem' => __DIR__ . '/../..' . '/problems/problem01/src/OrderItem.php',
+        'problems\\problem01\\src\\OrderService' => __DIR__ . '/../..' . '/problems/problem01/src/OrderService.php',
+        'problems\\problem01\\src\\OrderStatus' => __DIR__ . '/../..' . '/problems/problem01/src/OrderStatus.php',
+        'problems\\problem01\\tests\\OrderServiceTest' => __DIR__ . '/../..' . '/problems/problem01/tests/OrderServiceTest.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

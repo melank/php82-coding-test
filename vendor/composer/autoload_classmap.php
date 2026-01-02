@@ -7,12 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'InMemoryProductCatalog' => $baseDir . '/problems/problem01/src/InMemoryProductCatalog.php',
-    'Order' => $baseDir . '/problems/problem01/src/Order.php',
-    'OrderItem' => $baseDir . '/problems/problem01/src/OrderItem.php',
-    'OrderService' => $baseDir . '/problems/problem01/src/OrderService.php',
-    'OrderServiceTest' => $baseDir . '/problems/problem01/tests/OrderServiceTest.php',
-    'OrderStatus' => $baseDir . '/problems/problem01/src/OrderStatus.php',
     'PHPUnit\\Event\\Application\\Finished' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
     'PHPUnit\\Event\\Application\\FinishedSubscriber' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
     'PHPUnit\\Event\\Application\\Started' => $vendorDir . '/phpunit/phpunit/src/Event/Events/Application/Started.php',
@@ -1188,4 +1182,10 @@ return array(
     'TheSeer\\Tokenizer\\TokenCollectionException' => $vendorDir . '/theseer/tokenizer/src/TokenCollectionException.php',
     'TheSeer\\Tokenizer\\Tokenizer' => $vendorDir . '/theseer/tokenizer/src/Tokenizer.php',
     'TheSeer\\Tokenizer\\XMLSerializer' => $vendorDir . '/theseer/tokenizer/src/XMLSerializer.php',
+    'problems\\problem01\\src\\InMemoryProductCatalog' => $baseDir . '/problems/problem01/src/InMemoryProductCatalog.php',
+    'problems\\problem01\\src\\Order' => $baseDir . '/problems/problem01/src/Order.php',
+    'problems\\problem01\\src\\OrderItem' => $baseDir . '/problems/problem01/src/OrderItem.php',
+    'problems\\problem01\\src\\OrderService' => $baseDir . '/problems/problem01/src/OrderService.php',
+    'problems\\problem01\\src\\OrderStatus' => $baseDir . '/problems/problem01/src/OrderStatus.php',
+    'problems\\problem01\\tests\\OrderServiceTest' => $baseDir . '/problems/problem01/tests/OrderServiceTest.php',
 );

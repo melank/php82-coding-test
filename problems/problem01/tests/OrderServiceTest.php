@@ -2,8 +2,14 @@
 
 declare(strict_types=1);
 
+namespace problems\problem01\tests;
+
+use DomainException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use problems\problem01\src\InMemoryProductCatalog;
+use problems\problem01\src\OrderService;
+use problems\problem01\src\OrderStatus;
 
 final class OrderServiceTest extends TestCase
 {
