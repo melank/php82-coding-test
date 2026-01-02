@@ -4,27 +4,38 @@ declare(strict_types=1);
 
 namespace problems\problem01\src;
 
-use problems\problem01\src\OrderStatus;
-
 final class Order
 {
-    public readonly int $userId;    // ユーザーID
-    private readonly OrderItem $item;  // OrderItemの配列
-    public readonly OrderStatus $status;    // 注文の状態
+    /**
+     * @param list<OrderItem> $items
+     * @param array<int, int> $pricesByProductId
+     */
+    private function __construct(
+        public readonly int $userId,
+        public readonly OrderStatus $status,
+        private array $items,
+        private array $pricesByProductId,
+    ) {}
 
-    public function __construct(int $userId, OrderItem $item) {
-        $this->userId = $userId;
-        $this->item = $item;
-        $this->status = OrderStatus::Pending;
+    /**
+     * @param list<OrderItem> $items
+     * @param array<int, int> $pricesByProductId
+     */
+    public static function pending(int $userId, array $items, array $pricesByProductId): self
+    {
+        return new self($userId, OrderStatus::Pending, $items, $pricesByProductId);
     }
 
     public function totalQuantity(): int
     {
-        return $this->item->totalQuantity;
+        return array_sum(array_map(fn(OrderItem $item) => $item->quantity, $this->items));
     }
 
     public function totalPrice(): int
     {
-        return $this->item->totalPrice;
+        return array_sum(array_map(
+            fn(OrderItem $item) => $this->pricesByProductId[$item->productId] * $item->quantity,
+            $this->items
+        ));
     }
 }
