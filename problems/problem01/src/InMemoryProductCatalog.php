@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace problems\problem01\src;
 
-final class InMemoryProductCatalog
+final readonly class InMemoryProductCatalog
 {
-    public readonly array $catalog;
+    /**
+     * @param array<int, int> $pricesById productId => price
+     */
+    public function __construct(private array $pricesById) {}
 
-    public function __construct(array $catalog) {
-        $this->catalog = $catalog;
+    public function priceOf(int $productId): ?int
+    {
+        return $this->pricesById[$productId] ?? null;
     }
 }

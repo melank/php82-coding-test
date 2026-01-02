@@ -17,12 +17,25 @@ public function 注文を作成できる(): void
 
 ## 問題追加時のルール
 
-`problems/problemXX/` を追加した場合、必ず `phpunit.xml` に testsuite を追加すること。
+`problems/problemXX/` を追加した場合:
+
+1. `phpunit.xml` に testsuite を追加する
 
 ```xml
 <testsuite name="problemXX">
   <directory>problems/problemXX/tests</directory>
 </testsuite>
+```
+
+2. `GUIDE.md` を作成し、実装方針を記載する
+   - **実装例（コード）は絶対に記載しない**（コーディングテスト練習用のため）
+   - クラス名、メソッド名、シグネチャのみ記載する
+
+```
+problems/problemXX/
+├── GUIDE.md    # 実装方針ドキュメント
+├── src/
+└── tests/
 ```
 
 ## コマンド
