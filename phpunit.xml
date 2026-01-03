@@ -4,11 +4,14 @@
     <testsuite name="all">
       <directory>problems/*/tests</directory>
     </testsuite>
-    <testsuite name="problem01">
+    <testsuite name="01">
       <directory>problems/problem01/tests</directory>
     </testsuite>
-    <testsuite name="problem02">
+    <testsuite name="02">
       <directory>problems/problem02/tests</directory>
+    </testsuite>
+    <testsuite name="03">
+      <directory>problems/problem03/tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
