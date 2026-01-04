@@ -1,5 +1,11 @@
 # Project Rules
 
+## コーディング規約
+
+### src フォルダのルール
+
+- `src/` 配下の PHP ファイルでは `declare(strict_types=1);` 以外の declare 文は記述しない
+
 ## テストの書き方
 
 - テストメソッド名は日本語で記述する

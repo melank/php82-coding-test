@@ -13,5 +13,8 @@
     <testsuite name="03">
       <directory>problems/problem03/tests</directory>
     </testsuite>
+    <testsuite name="04">
+      <directory>problems/problem04/tests</directory>
+    </testsuite>
   </testsuites>
 </phpunit>
