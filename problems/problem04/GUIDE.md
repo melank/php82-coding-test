@@ -1,6 +1,6 @@
-# Problem 04: Shipping Fee Calculator - 実装方針
+# Problem 04: Shipping Fee Calculator（送料計算）
 
-## 概要
+## Goal
 
 カート内の商品と配送先、配送手段から「送料」を計算するサービスを実装する。
 
@@ -10,24 +10,29 @@
 
 ### 1. 地域別の基本送料（base fee）
 
-- JP-EAST: 500円
-- JP-WEST: 600円
-- JP-OKINAWA: 1200円
+| 地域コード | 基本送料 |
+|------------|----------|
+| JP-EAST    | 500円    |
+| JP-WEST    | 600円    |
+| JP-OKINAWA | 1200円   |
 
 ### 2. 配送手段による倍率（multiplier）
 
-- Standard: 1.0
-- Express: 1.5
+| 配送手段 | 倍率 |
+|----------|------|
+| Standard | 1.0  |
+| Express  | 1.5  |
 
-### 3. 送料無料条件
+### 3. 送料無料条件（free shipping threshold）
 
 - 合計商品価格が threshold 以上なら送料は 0
-- **沖縄（JP-OKINAWA）は送料無料対象外**
+- **ただし、沖縄（JP-OKINAWA）は送料無料対象外**（常に送料がかかる）
 
 ### 4. 危険物（hazmat）手数料
 
-- hazmat=true の商品が含まれる場合、+300円
-- **送料無料判定の後に加算**（送料無料でも加算される）
+- カート内に `hazmat=true` の商品が1つでも含まれる場合、追加で +300円
+- **hazmat 手数料は送料無料判定の後に加算される**
+  - 送料無料でも hazmat があれば 300円かかる
 
 ---
 
@@ -35,10 +40,10 @@
 
 1. cart の商品合計金額 `subtotal` を計算
 2. destination の `base fee` を取得
-3. shipping method `multiplier` を適用 → `feeBase`
-4. 送料無料判定（`subtotal >= threshold` かつ `region != OKINAWA`）
-5. hazmat 商品が含まれれば `hazmatFee` を加算
-6. 最終送料を int で返す（端数は切り上げ）
+3. shipping method `multiplier` を適用 → `feeBase = (int)ceil(baseFee * multiplier)`
+4. 送料無料判定（`subtotal >= threshold` かつ `region != OKINAWA`）なら `feeBase = 0`
+5. hazmat 商品が含まれれば `hazmatFee` を加算（送料無料でも加算）
+6. 最終送料を int で返す
 
 ---
 
@@ -46,14 +51,22 @@
 
 ### Input
 
-- `$cart`: `Cart`
-- `$dest`: `Destination`
-- `$method`: `ShippingMethod`
-- `$policy`: `PricingPolicy`
+| パラメータ | 型 | 説明 |
+|------------|-----|------|
+| `$cart` | `Cart` | 商品の配列を持つカート |
+| `$dest` | `Destination` | 配送先（地域コード） |
+| `$method` | `ShippingMethod` | 配送手段（Standard / Express） |
+| `$policy` | `PricingPolicy` | 送料ルールの設定 |
 
 ### Output
 
 - 送料（int、円）
+
+### API シグネチャ
+
+```
+ShippingService::calculate(Cart, Destination, ShippingMethod, PricingPolicy): int
+```
 
 ---
 
@@ -61,20 +74,20 @@
 
 ### 1. Value Object: CartItem
 
-- `public readonly int $price`
-- `public readonly int $quantity`
-- `public readonly bool $hazmat`
-- コンストラクタで `price <= 0` または `quantity <= 0` の場合は `DomainException` を投げる
+- `price: int` - 商品価格
+- `quantity: int` - 数量
+- `hazmat: bool` - 危険物フラグ
+- コンストラクタでバリデーション
 
 ### 2. Value Object: Cart
 
-- `public readonly array $items` (`CartItem[]`)
-- `subtotal(): int` - 全商品の `price * quantity` の合計を返す
-- `hasHazmat(): bool` - hazmat 商品が含まれるかを返す
+- `items: list<CartItem>` - 商品リスト
+- `subtotal(): int` - 全商品の price * quantity の合計
+- `hasHazmat(): bool` - hazmat 商品が含まれるか
 
 ### 3. Value Object: Destination
 
-- `public readonly string $regionCode`
+- `regionCode: string` - 地域コード
 
 ### 4. Enum: ShippingMethod
 
@@ -83,41 +96,40 @@
 
 ### 5. Value Object: PricingPolicy
 
-- `public readonly array $baseFees` (`array<string, int>`)
-- `public readonly array $multipliers` (`array<string, float>`)
-- `public readonly int $freeShippingThreshold`
-- `public readonly int $hazmatFee`
-- コンストラクタでバリデーション（負の値チェック）
+- `baseFees: array<string, int>` - 地域別基本送料
+- `multipliers: array<string, float>` - 配送手段別倍率
+- `freeShippingThreshold: int` - 送料無料閾値
+- `hazmatFee: int` - 危険物手数料
+- コンストラクタでバリデーション
 
 ### 6. Service: ShippingService
 
-- `calculate(Cart $cart, Destination $dest, ShippingMethod $method, PricingPolicy $policy): int`
+- `calculate(Cart, Destination, ShippingMethod, PricingPolicy): int`
 
-#### バリデーション
+---
 
-| 条件 | 例外 |
+## Error Handling
+
+以下の条件で `DomainException` をスローする：
+
+| 条件 | 説明 |
 |------|------|
-| 未知の regionCode | `DomainException` |
-| 未知の ShippingMethod | `DomainException` |
-
-#### 処理フロー
-
-1. cart の subtotal を計算
-2. policy から destination の base fee を取得（未知なら例外）
-3. policy から method の multiplier を取得（未知なら例外）
-4. `feeBase = (int)ceil(baseFee * multiplier)`
-5. 送料無料判定: `subtotal >= threshold && regionCode !== 'JP-OKINAWA'` なら `feeBase = 0`
-6. hazmat 判定: `cart->hasHazmat()` なら `feeBase += hazmatFee`
-7. `feeBase` を返す
+| `price <= 0` | 商品価格が0以下 |
+| `quantity <= 0` | 商品数量が0以下 |
+| 未知の `regionCode` | policy に存在しない地域コード |
+| 未知の `ShippingMethod` | policy に存在しない配送手段 |
+| `threshold < 0` | 送料無料閾値が負の値 |
+| `baseFee < 0` | 基本送料が負の値 |
+| `hazmatFee < 0` | 危険物手数料が負の値 |
 
 ---
 
 ## 実装上の注意
 
-- 金額は int（円）で扱う
-- multiplier 適用後の端数は **ceil で切り上げ**
-- 沖縄は送料無料対象外
-- hazmat 手数料は送料無料判定の **後** に加算
+- 金額は int（円）で扱い、小数は使用しない
+- multiplier の結果は小数になり得るが、最終送料は **切り上げ（ceil）** で int にする
+- **沖縄（JP-OKINAWA）は送料無料対象外**（subtotal が threshold 以上でも送料がかかる）
+- **hazmat 手数料は送料無料判定の後に加算**（送料無料でも hazmat があれば 300円）
 
 ---
 
