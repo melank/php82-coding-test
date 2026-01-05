@@ -4,7 +4,7 @@
 
 ### src フォルダのルール
 
-- `src/` 配下の PHP ファイルでは `declare(strict_types=1);` 以外の declare 文は記述しない
+- `src/` 配下の PHP ファイルは `declare(strict_types=1);` のみを記述する（クラス定義等は記述しない）
 
 ## テストの書き方
 
